@@ -3,32 +3,36 @@ package CabInvoiceGenerator;
 public class InvoiceSummary 
 {
 
-	private int numOfRides;
+	private int numberOfRides;
 	private double totalFare;
 	private Object averageFare;
 
-	public InvoiceSummary(int numOfRides, double totalFare) 
+	public InvoiceSummary(int numberOfRides, double totalFare) 
 	{
-		this.numOfRides=numOfRides;
+		this.numberOfRides=numberOfRides;
 		this.totalFare=totalFare;
-		this.averageFare=this.totalFare/this.numOfRides;
+		this.averageFare=this.totalFare/this.numberOfRides;
 	}
 
-	public int getNumOfRides() {
-		return numOfRides;
+	public int getNumberOfRides() 
+	{
+		return numberOfRides;
 	}
 
-	public double getTotalFare() {
+	public double getTotalFare() 
+	{
 		return totalFare;
 	}
 
-	public Object getAverageFare() {
+	public Object getAverageFare() 
+	{
 		return averageFare;
 	}
 
 	@Override
-	public String toString() {
-		return "InvoiceSummary [numOfRides=" + numOfRides + ", totalFare=" + totalFare + ", averageFare=" + averageFare
+	public String toString() 
+	{
+		return "InvoiceSummary [numberOfRides=" + numberOfRides + ", totalFare=" + totalFare + ", averageFare=" + averageFare
 				+ "]";
 	}
 	
