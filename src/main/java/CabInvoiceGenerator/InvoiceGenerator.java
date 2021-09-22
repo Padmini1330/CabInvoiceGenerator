@@ -5,7 +5,7 @@ public class InvoiceGenerator
 
 	private static final int COST_PER_TIME = 1;
 	private static final double COST_PER_KILOMETER = 10;
-	private static final double MINIMUM_FARE = 0;
+	private static final double MINIMUM_FARE = 5;
 
 	public double calculateFare(double distance, int time) 
 	{
