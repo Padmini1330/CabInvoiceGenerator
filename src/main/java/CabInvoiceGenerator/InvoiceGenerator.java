@@ -1,5 +1,8 @@
 package CabInvoiceGenerator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class InvoiceGenerator 
 {
 
@@ -13,14 +16,19 @@ public class InvoiceGenerator
 		return Math.max(totalFare,MINIMUM_FARE);
 	}
 	
-	public InvoiceSummary calculateFare(Ride[] rides)
+	public InvoiceSummary calculateFare(ArrayList<Ride> rides)
 	{
 		double totalFare=0;
+		
 		for(Ride ride:rides)
 		{
 			totalFare+=this.calculateFare(ride.distance,ride.time);
 		}
-		return new InvoiceSummary(rides.length, totalFare);
+		return new InvoiceSummary(rides.size(), totalFare);
 	}
 	
+	public InvoiceSummary calculateInvoice(int userId,HashMap<Integer, ArrayList<Ride>> rideRepository)
+	{
+		return calculateFare(rideRepository.get(userId));
+	}
 }
