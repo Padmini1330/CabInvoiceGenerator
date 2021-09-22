@@ -3,32 +3,34 @@ package CabInvoiceGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class InvoiceGenerator 
+public class InvoiceGenerator implements InvoiceGeneratorIF
 {
 
-	private static final int COST_PER_TIME = 1;
-	private static final double COST_PER_KILOMETER = 10;
-	private static final double MINIMUM_FARE = 5;
+	private static final int NORMAL_COST_PER_TIME = 1;
+	private static final double NORMAL_COST_PER_KILOMETER = 10;
+	private static final double NORMAL_MINIMUM_FARE = 5;
+	private static final int PREMIUM_COST_PER_TIME = 2;
+	private static final double PREMIUM_COST_PER_KILOMETER = 15;
+	private static final double PREMIUM_MINIMUM_FARE = 20;
 
-	public double calculateFare(double distance, int time) 
+	public double calculateFare(double distance, int time, RideType rideType) 
 	{
-		double totalFare= distance*COST_PER_KILOMETER + time*COST_PER_TIME;
-		return Math.max(totalFare,MINIMUM_FARE);
+		if(rideType.equals(RideType.NORMAL_RIDE))
+		{
+			double totalFare= distance*NORMAL_COST_PER_KILOMETER + time*NORMAL_COST_PER_TIME;
+			return Math.max(totalFare,NORMAL_MINIMUM_FARE);
+		}
+		double totalFare= distance*PREMIUM_COST_PER_KILOMETER + time*PREMIUM_COST_PER_TIME;
+		return Math.max(totalFare,PREMIUM_MINIMUM_FARE);
 	}
-	
-	public InvoiceSummary calculateFare(ArrayList<Ride> rides)
+		
+	public InvoiceSummary calculateInvoice(int userId,HashMap<Integer, ArrayList<Ride>> rideRepository,RideType rideType)
 	{
 		double totalFare=0;
-		
-		for(Ride ride:rides)
+		for(Ride ride:rideRepository.get(userId))
 		{
-			totalFare+=this.calculateFare(ride.distance,ride.time);
+			totalFare+=this.calculateFare(ride.distance,ride.time,rideType);
 		}
-		return new InvoiceSummary(rides.size(), totalFare);
-	}
-	
-	public InvoiceSummary calculateInvoice(int userId,HashMap<Integer, ArrayList<Ride>> rideRepository)
-	{
-		return calculateFare(rideRepository.get(userId));
+		return new InvoiceSummary(rideRepository.get(userId).size(), totalFare);
 	}
 }
