@@ -2,6 +2,9 @@ package CabInvoiceGenerator;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,15 +35,18 @@ public class InvoiceServiceTest
 		Assert.assertEquals(5, fare, 0.0);
 	}
 	
+	
+	
 	@Test
-	public void givenMultipleRides_WhenProper_ShouldReturnInvoiceSummary() 
+	public void givenUserID_WhenProper_ShouldReturnInvoiceSummaryFromRideRepository() 
 	{
-		Ride[] rides= {new Ride(2.0, 5),new Ride(0.1, 1)};
-		InvoiceSummary invoiceSummary=invoiceGenerator.calculateFare(rides);
+		ArrayList<Ride> rides=new ArrayList<Ride>();
+		HashMap<Integer, ArrayList<Ride>> rideRepository=new HashMap<Integer, ArrayList<Ride>>();
+		rides.add(new Ride(2.0,5));
+		rides.add(new Ride(0.1,1));
+		rideRepository.put(100, rides);
+		InvoiceSummary invoiceSummary=invoiceGenerator.calculateInvoice(100,rideRepository);
 		InvoiceSummary expectedInvoiceSummary=new InvoiceSummary(2,30.0);
-		if(expectedInvoiceSummary.getAverageFare() == invoiceSummary.getAverageFare() 
-				&& expectedInvoiceSummary.getNumOfRides() == invoiceSummary.getNumOfRides() 
-				&& expectedInvoiceSummary.getTotalFare() == invoiceSummary.getTotalFare())
-			Assert.assertEquals(true, true);
+		Assert.assertEquals(expectedInvoiceSummary.toString(),invoiceSummary.toString());
 	}
 }
